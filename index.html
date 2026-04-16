@@ -1,177 +1,1042 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Inteligente | Pedidos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandGreen: '#10b981', 
-                        brandDark: '#0f172a', 
-                        brandCard: '#1e293b', 
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        /* Scrollbar estilizado para el textarea */
-        textarea::-webkit-scrollbar { width: 6px; }
-        textarea::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tortillería La Milpa Dorada — Pedidos en Línea</title>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --maiz:      #D97706;
+  --maiz-dark: #92400E;
+  --maiz-deep: #451A03;
+  --maiz-mid:  #F59E0B;
+  --maiz-lite: #FEF3C7;
+  --maiz-pale: #FFFBEB;
+  --terra:     #C2410C;
+  --terra-lite:#FFF7F0;
+  --verde:     #15803D;
+  --verde-lite:#F0FDF4;
+  --crema:     #FEFCE8;
+  --cafe:      #78350F;
+  --text-dark: #1C0A00;
+  --text-mid:  #57350A;
+  --text-muted:#A16207;
+  --border:    rgba(217,119,6,0.2);
+  --white:     #ffffff;
+  --radius:    16px;
+  --radius-sm: 10px;
+  --shadow:    0 4px 24px rgba(180,90,0,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #fdf6ec;
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--maiz-deep);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 20px rgba(69,26,3,0.4);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon {
+  width: 46px; height: 46px;
+  background: var(--maiz);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 0 0 4px rgba(245,158,11,0.25);
+}
+.brand-name {
+  font-family: 'Alfa Slab One', serif;
+  font-size: 20px;
+  color: var(--maiz-mid);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+.brand-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.btn-carrito {
+  background: var(--maiz);
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  transition: background 0.2s;
+}
+.btn-carrito:hover { background: var(--maiz-mid); }
+.badge {
+  background: var(--terra);
+  color: white;
+  font-size: 11px; font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 12px;
+  min-width: 22px;
+  text-align: center;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--maiz-deep);
+  padding: 52px 24px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(217,119,6,0.25) 0%, transparent 65%),
+              radial-gradient(ellipse at 80% 30%, rgba(194,65,12,0.2) 0%, transparent 55%);
+  pointer-events: none;
+}
+.hero-pattern {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #F59E0B 0px, #F59E0B 2px,
+    transparent 2px, transparent 24px
+  );
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(245,158,11,0.2);
+  border: 1px solid rgba(245,158,11,0.4);
+  color: #FCD34D;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 18px; border-radius: 30px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Alfa Slab One', serif;
+  font-size: clamp(36px, 6vw, 66px);
+  color: white;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  position: relative;
+}
+.hero h1 em {
+  color: var(--maiz-mid);
+  font-style: normal;
+}
+.hero p {
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  max-width: 460px;
+  margin: 0 auto 32px;
+  line-height: 1.65;
+  position: relative;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 44px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.stat { text-align: center; color: white; }
+.stat-num {
+  font-family: 'Alfa Slab One', serif;
+  font-size: 30px;
+  color: var(--maiz-mid);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+/* ── MAIN ── */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+
+.sec-title {
+  font-family: 'Alfa Slab One', serif;
+  font-size: 24px;
+  color: var(--maiz-deep);
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+.sec-sub {
+  font-size: 13px; color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ── CATEGORÍAS ── */
+.cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.cat-btn {
+  padding: 7px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  background: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.cat-btn:hover, .cat-btn.active {
+  background: var(--maiz);
+  border-color: var(--maiz);
+  color: white;
+}
+
+/* ── PRODUCTOS GRID ── */
+.prods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.prod-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 14px 16px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.prod-card:hover {
+  border-color: var(--maiz);
+  box-shadow: 0 6px 24px rgba(217,119,6,0.18);
+  transform: translateY(-3px);
+}
+.prod-card.oferta::before {
+  content: 'OFERTA';
+  position: absolute; top: -1px; right: -1px;
+  background: var(--terra);
+  color: white;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 0 var(--radius) 0 var(--radius-sm);
+}
+.prod-card.nuevo::before {
+  content: 'NUEVO';
+  position: absolute; top: -1px; right: -1px;
+  background: var(--verde);
+  color: white;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 0 var(--radius) 0 var(--radius-sm);
+}
+.prod-emoji { font-size: 46px; margin-bottom: 10px; }
+.prod-nombre {
+  font-size: 14px; font-weight: 800;
+  color: var(--maiz-deep); margin-bottom: 4px;
+}
+.prod-desc {
+  font-size: 11px; color: var(--text-muted);
+  margin-bottom: 10px; line-height: 1.45;
+}
+.prod-precio {
+  font-family: 'Alfa Slab One', serif;
+  font-size: 24px; color: var(--maiz);
+}
+.prod-precio span {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-muted);
+}
+.prod-precio del {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px; color: #aaa;
+  margin-right: 4px;
+  text-decoration: line-through;
+}
+.btn-add {
+  margin-top: 12px;
+  width: 100%;
+  background: var(--maiz-lite);
+  color: var(--maiz-dark);
+  border: 1.5px solid var(--maiz);
+  border-radius: 30px;
+  padding: 8px 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-add:hover { background: var(--maiz); color: white; }
+
+/* ── CARDS FORMULARIO ── */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-size: 15px; font-weight: 800;
+  color: var(--maiz-deep);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row.full { grid-template-columns: 1fr; }
+label {
+  display: block;
+  font-size: 11px; font-weight: 800;
+  color: var(--text-mid);
+  margin-bottom: 5px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px; color: var(--text-dark);
+  background: white; outline: none;
+  transition: border 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--maiz);
+  box-shadow: 0 0 0 3px rgba(217,119,6,0.12);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+/* ── HORARIOS ── */
+.hor-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-top: 8px;
+}
+.hor-btn {
+  padding: 9px 4px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--text-mid);
+  cursor: pointer; text-align: center;
+  transition: all 0.18s;
+}
+.hor-btn:hover, .hor-btn.active {
+  border-color: var(--maiz);
+  background: var(--maiz-lite);
+  color: var(--maiz-dark);
+}
+
+/* ── TIPO TORTILLA ── */
+.tipo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-top: 8px;
+}
+.tipo-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s;
+  background: white;
+}
+.tipo-card:hover, .tipo-card.active {
+  border-color: var(--maiz);
+  background: var(--maiz-lite);
+}
+.tipo-card.active { border-width: 2px; border-color: var(--maiz); }
+.tipo-icon { font-size: 28px; margin-bottom: 4px; }
+.tipo-nombre { font-size: 13px; font-weight: 800; color: var(--maiz-deep); }
+.tipo-desc { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── SIDEBAR ── */
+.sidebar { position: sticky; top: 88px; }
+
+.vacio { text-align: center; padding: 28px 16px; color: var(--text-muted); }
+.vacio .ico { font-size: 44px; margin-bottom: 10px; opacity: 0.35; }
+.vacio p { font-size: 14px; font-weight: 600; }
+
+.ci {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.ci:last-child { border-bottom: none; }
+.ci-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+.ci-ico { font-size: 22px; }
+.ci-name { font-size: 13px; font-weight: 800; color: var(--text-dark); }
+.ci-sub  { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.ci-qty { display: flex; align-items: center; gap: 6px; }
+.q-btn {
+  width: 26px; height: 26px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: white; cursor: pointer;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; color: var(--text-mid);
+}
+.q-btn:hover { background: var(--maiz-lite); border-color: var(--maiz); color: var(--maiz); }
+.q-num { font-size: 14px; font-weight: 800; min-width: 22px; text-align: center; }
+
+.total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; font-size: 13px; color: var(--text-mid); font-weight: 600;
+}
+.total-row.grand {
+  border-top: 2.5px solid var(--maiz-deep);
+  margin-top: 8px; padding-top: 12px;
+  font-size: 18px; font-weight: 800; color: var(--maiz-deep);
+}
+
+.btn-pedir {
+  width: 100%; padding: 14px;
+  background: var(--maiz-deep); color: white;
+  border: none; border-radius: var(--radius);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px; font-weight: 800;
+  cursor: pointer; margin-top: 14px;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.3px;
+}
+.btn-pedir:hover { background: var(--cafe); }
+.btn-pedir:active { transform: scale(0.98); }
+
+.btn-wa-inline {
+  width: 100%; margin-top: 10px; padding: 12px;
+  background: #25D366; color: white;
+  border: none; border-radius: var(--radius);
+  font-family: 'Nunito'; font-size: 14px; font-weight: 800;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+}
+.btn-wa-inline:hover { background: #1ebe5d; }
+
+/* ── MAPA ── */
+.mapa-wrap {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 22px;
+}
+.mapa-header { padding: 20px 22px 0; }
+.mapa-frame { width: 100%; height: 250px; border: none; display: block; margin-top: 14px; }
+.suc-grid {
+  padding: 14px 22px 18px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+}
+.suc-item { display: flex; align-items: flex-start; gap: 7px; }
+.suc-ico { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+.suc-lbl { font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.suc-val { font-size: 12px; color: var(--text-dark); font-weight: 700; line-height: 1.45; }
+
+/* ── WHATSAPP FLOTANTE ── */
+.wa-float {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: #25D366; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 22px rgba(37,211,102,0.5);
+  z-index: 999; transition: transform 0.2s, box-shadow 0.2s;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.65); }
+.wa-float svg { width: 32px; height: 32px; fill: white; }
+.wa-tip {
+  position: fixed; bottom: 100px; right: 28px;
+  background: var(--maiz-deep); color: white;
+  font-size: 13px; font-weight: 700;
+  padding: 8px 14px; border-radius: 10px;
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s; z-index: 998;
+}
+.wa-tip::after {
+  content: ''; position: absolute; bottom: -6px; right: 24px;
+  width: 12px; height: 6px;
+  background: var(--maiz-deep);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.wa-float:hover ~ .wa-tip { opacity: 1; }
+
+/* ── NOTIF ── */
+.notif {
+  position: fixed; top: 82px; right: 24px;
+  background: var(--maiz-deep); color: white;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(69,26,3,0.35);
+  z-index: 9999;
+  transform: translateX(130%);
+  transition: transform 0.3s cubic-bezier(.25,.8,.25,1);
+  max-width: 280px;
+}
+.notif.show { transform: translateX(0); }
+
+/* ── MODAL ── */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(69,26,3,0.75);
+  z-index: 10000;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.modal-bg.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: white; border-radius: 20px;
+  padding: 40px 30px; max-width: 420px; width: 100%;
+  text-align: center;
+  transform: scale(0.88); transition: transform 0.25s;
+}
+.modal-bg.show .modal { transform: scale(1); }
+.modal-ico { font-size: 60px; margin-bottom: 14px; }
+.modal h2 {
+  font-family: 'Alfa Slab One', serif;
+  font-size: 28px; color: var(--maiz-deep);
+  letter-spacing: 0.5px; margin-bottom: 8px;
+}
+.modal p { font-size: 14px; color: var(--text-mid); line-height: 1.65; margin-bottom: 20px; }
+.folio {
+  background: var(--maiz-lite); border: 1.5px solid var(--maiz);
+  border-radius: var(--radius-sm); padding: 10px 22px;
+  display: inline-block;
+  font-family: 'Alfa Slab One', serif; font-size: 22px;
+  color: var(--maiz); letter-spacing: 2px; margin-bottom: 22px;
+}
+.btn-modal {
+  padding: 12px 34px;
+  background: var(--maiz); color: white;
+  border: none; border-radius: 30px;
+  font-family: 'Nunito'; font-size: 15px; font-weight: 800;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn-modal:hover { background: var(--maiz-dark); }
+
+/* ── PROMO BANNER ── */
+.promo {
+  background: linear-gradient(135deg, var(--maiz) 0%, var(--terra) 100%);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 14px;
+  color: white;
+}
+.promo-ico { font-size: 36px; flex-shrink: 0; }
+.promo-txt .t { font-size: 15px; font-weight: 800; }
+.promo-txt .s { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .suc-grid { grid-template-columns: 1fr; }
+  .hor-grid { grid-template-columns: repeat(2,1fr); }
+  .prods-grid { grid-template-columns: repeat(2,1fr); }
+  .tipo-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
-<body class="bg-brandDark text-gray-200 font-sans antialiased pb-48">
+<body>
 
-    <header class="bg-brandCard shadow-lg p-4 sticky top-0 z-50 border-b border-gray-700">
-        <div class="max-w-3xl mx-auto flex justify-between items-start">
-            <div>
-                <h1 class="text-xl font-bold text-white flex items-center gap-2">
-                    <span class="text-brandGreen">Tortillería</span> Express
-                </h1>
-                <p class="text-sm text-gray-400 mt-1 flex items-center gap-1">
-                    <svg class="w-4 h-4 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Av. Revolución 204, Centro (Frente al Kiosko)
-                </p>
-            </div>
-            <div class="text-sm font-medium bg-brandDark px-3 py-1 rounded-full border border-brandGreen text-brandGreen whitespace-nowrap">
-                🛵 Envío a Domicilio
-            </div>
-        </div>
-    </header>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🫓</div>
+      <div>
+        <div class="brand-name">La Milpa Dorada</div>
+        <div class="brand-sub">Tortillería · Querétaro, Qro.</div>
+      </div>
+    </div>
+    <button class="btn-carrito" onclick="scrollCarrito()">
+      🛒 Mi pedido <span class="badge" id="badgeN">0</span>
+    </button>
+  </div>
+</header>
 
-    <main class="max-w-3xl mx-auto p-4 mt-2">
-        <h2 class="text-2xl font-bold mb-6 text-white border-l-4 border-brandGreen pl-3">Menú del Día</h2>
-        
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            </div>
-    </main>
+<div class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-badge">✦ Maíz 100% Mexicano ✦</div>
+  <h1>Tortillas Recién<br><em>Hechas para Ti</em></h1>
+  <p>Pedidos a domicilio en Querétaro. Masa fresca a diario, sabor de siempre. Sin conservadores.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">25+</div><div class="stat-lbl">Años de tradición</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Variedades de maíz</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-lbl">Sin conservadores</div></div>
+    <div class="stat"><div class="stat-num">1 hr</div><div class="stat-lbl">Entrega express</div></div>
+  </div>
+</div>
 
-    <div id="floating-cart" class="fixed bottom-0 w-full bg-brandCard border-t border-brandGreen p-4 hidden shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.7)] z-50 fade-in">
-        <div class="max-w-3xl mx-auto">
-            
-            <div class="mb-4">
-                <label for="direccion-cliente" class="block text-sm font-medium text-gray-300 mb-1">📍 ¿A dónde lo enviamos?</label>
-                <textarea id="direccion-cliente" rows="2" class="w-full bg-brandDark text-white border border-gray-600 rounded-lg p-2 text-sm focus:ring-2 focus:ring-brandGreen focus:border-transparent outline-none transition-all" placeholder="Ej. Calle Morelos #123, portón negro. Referencia: Esquina con la farmacia."></textarea>
-            </div>
+<div class="main">
 
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-sm text-gray-400">Total del pedido:</p>
-                    <p class="text-2xl font-bold text-white">$<span id="cart-total">0.00</span></p>
-                </div>
-                <button onclick="enviarPedido()" class="bg-brandGreen hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center shadow-lg transition-transform transform hover:scale-105">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    Pedir
-                </button>
-            </div>
-        </div>
+  <div>
+
+    <div class="promo">
+      <div class="promo-ico">🎉</div>
+      <div class="promo-txt">
+        <div class="t">¡Martes de Promo! 2 kg de tortilla de harina al precio de 1.5</div>
+        <div class="s">Válido solo hoy. Aplica automáticamente en tu pedido.</div>
+      </div>
     </div>
 
-    <script>
-        const WHATSAPP_NUMBER = "5214776772422"; 
-        
-        // Tus imágenes directas (Riesgo de Hotlinking a evaluar en producción)
-        const productos = [
-            { id: 1, nombre: "Kilo de Tortilla Blanca", descripcion: "Calientita, envuelta en papel grado alimenticio.", precio: 22.00, imagen: "https://cloudfront-us-east-1.images.arcpublishing.com/elfinanciero/DC72RKESDJATTGSDL4BFED5AMU.jpeg?auto=format&fit=crop&w=300&q=80" },
-            { id: 2, nombre: "Kilo de Masa", descripcion: "Masa 100% de maíz nixtamalizado, ideal para tamales o sopes.", precio: 18.00, imagen: "https://yucatanalamano.com/wp-content/uploads/2024/10/images-37.jpeg?auto=format&fit=crop&w=300&q=80" },
-            { id: 3, nombre: "Totopos (500g)", descripcion: "Crujientes, doraditos, perfectos para chilaquiles o botana.", precio: 35.00, imagen: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=300&q=80" },
-            { id: 4, nombre: "Salsa Verde Martajada", descripcion: "Picor medio, receta de la casa con tomate verde y jalapeño.", precio: 25.00, imagen: "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/F825E9CA-1EB5-48A9-9FFB-E60E985C805D/Derivates/12D61D0A-2259-494C-90B2-140677DC8B1B.jpg?auto=format&fit=crop&w=300&q=80" }
-        ];
+    <div class="sec-title">Nuestros Productos</div>
+    <div class="sec-sub">Tortillas frescas todos los días — listos para entrega o recolección</div>
 
-        let carrito = {};
+    <div class="cats">
+      <button class="cat-btn active" onclick="filtrarCat(this,'todos')">Todos</button>
+      <button class="cat-btn" onclick="filtrarCat(this,'tortillas')">Tortillas</button>
+      <button class="cat-btn" onclick="filtrarCat(this,'botanas')">Botanas</button>
+      <button class="cat-btn" onclick="filtrarCat(this,'sopes')">Sopes & Gorditas</button>
+      <button class="cat-btn" onclick="filtrarCat(this,'extra')">Extras</button>
+    </div>
 
-        function renderProductos() {
-            const grid = document.getElementById('product-grid');
-            let html = '';
+    <div class="prods-grid" id="prodsGrid">
 
-            productos.forEach(prod => {
-                html += `
-                    <div class="bg-brandCard p-3 rounded-xl border border-gray-700 shadow-md flex gap-4 items-center transition-colors hover:border-gray-500">
-                        <img src="${prod.imagen}" alt="${prod.nombre}" class="w-24 h-24 object-cover rounded-lg shadow-sm border border-gray-600 flex-shrink-0">
-                        
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-base sm:text-lg font-bold text-white truncate">${prod.nombre}</h3>
-                            <p class="text-xs text-gray-400 mt-1 line-clamp-2">${prod.descripcion}</p>
-                            <p class="text-brandGreen font-bold mt-1">$${prod.precio.toFixed(2)}</p>
-                        </div>
+      <div class="prod-card" data-cat="tortillas" onclick="agregar('maiz1','Tortilla de Maíz 1 kg',28,'🫓')">
+        <div class="prod-emoji">🫓</div>
+        <div class="prod-nombre">Tortilla Maíz 1 kg</div>
+        <div class="prod-desc">Maíz azul y blanco. Recién salida del comal.</div>
+        <div class="prod-precio">$28 <span>/ kg</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-                        <div class="flex flex-col items-center bg-brandDark rounded-lg p-1 border border-gray-700 flex-shrink-0">
-                            <button onclick="modificarCantidad(${prod.id}, 1)" class="w-8 h-8 flex justify-center items-center text-brandGreen hover:text-white hover:bg-gray-700 rounded-md bg-brandCard font-bold mb-1 transition-colors">+</button>
-                            <span id="qty-${prod.id}" class="w-8 text-center font-bold text-white text-sm my-1">0</span>
-                            <button onclick="modificarCantidad(${prod.id}, -1)" class="w-8 h-8 flex justify-center items-center text-gray-400 hover:text-white hover:bg-gray-700 rounded-md bg-brandCard font-bold mt-1 transition-colors">-</button>
-                        </div>
-                    </div>
-                `;
-            });
-            grid.innerHTML = html;
-        }
+      <div class="prod-card oferta" data-cat="tortillas" onclick="agregar('harina1','Tortilla de Harina 1 kg',35,'🥙')">
+        <div class="prod-emoji">🥙</div>
+        <div class="prod-nombre">Tortilla Harina 1 kg</div>
+        <div class="prod-desc">Estilo norteño, suave y grandota. Perfecta para burritos.</div>
+        <div class="prod-precio"><del>$40</del> $35 <span>/ kg</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-        function modificarCantidad(id, cambio) {
-            if (!carrito[id]) carrito[id] = 0;
-            carrito[id] += cambio;
-            if (carrito[id] < 0) carrito[id] = 0; 
-            
-            document.getElementById(`qty-${id}`).innerText = carrito[id];
-            actualizarCarritoUI();
-        }
+      <div class="prod-card nuevo" data-cat="tortillas" onclick="agregar('integral','Tortilla Integral 1 kg',38,'🌾')">
+        <div class="prod-emoji">🌾</div>
+        <div class="prod-nombre">Tortilla Integral 1 kg</div>
+        <div class="prod-desc">Maíz entero + fibra. Opción saludable sin perder el sabor.</div>
+        <div class="prod-precio">$38 <span>/ kg</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-        function actualizarCarritoUI() {
-            let total = 0;
-            let items = 0;
+      <div class="prod-card" data-cat="tortillas" onclick="agregar('maizazul','Tortilla Maíz Azul 1 kg',42,'💜')">
+        <div class="prod-emoji">💜</div>
+        <div class="prod-nombre">Tortilla Maíz Azul 1 kg</div>
+        <div class="prod-desc">Antioxidantes naturales. Sabor terroso y auténtico.</div>
+        <div class="prod-precio">$42 <span>/ kg</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            productos.forEach(prod => {
-                if (carrito[prod.id] > 0) {
-                    total += carrito[prod.id] * prod.precio;
-                    items += carrito[prod.id];
-                }
-            });
+      <div class="prod-card" data-cat="botanas" onclick="agregar('tostadas','Tostadas x 30',45,'🥗')">
+        <div class="prod-emoji">🥗</div>
+        <div class="prod-nombre">Tostadas x 30</div>
+        <div class="prod-desc">Horneadas, crujientes. Ideales para tostadas y antojitos.</div>
+        <div class="prod-precio">$45 <span>/ paquete</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            document.getElementById('cart-total').innerText = total.toFixed(2);
+      <div class="prod-card" data-cat="botanas" onclick="agregar('chips','Totopes / Chips 250g',28,'🌽')">
+        <div class="prod-emoji">🌽</div>
+        <div class="prod-nombre">Totopes 250 g</div>
+        <div class="prod-desc">Crujientes de maíz azul y blanco. Sal de grano.</div>
+        <div class="prod-precio">$28 <span>/ bolsa</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            const floatingCart = document.getElementById('floating-cart');
-            if (items > 0) {
-                floatingCart.classList.remove('hidden');
-            } else {
-                floatingCart.classList.add('hidden');
-            }
-        }
+      <div class="prod-card" data-cat="sopes" onclick="agregar('sopes12','Sopes precocidos x 12',60,'🫔')">
+        <div class="prod-emoji">🫔</div>
+        <div class="prod-nombre">Sopes x 12</div>
+        <div class="prod-desc">Precocidos listos para rellenar. Orilla pinchada a mano.</div>
+        <div class="prod-precio">$60 <span>/ docena</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-        function enviarPedido() {
-            const direccionInput = document.getElementById('direccion-cliente').value.trim();
-            
-            // Validación: Obligar al cliente a poner su dirección
-            if (direccionInput === "") {
-                alert("Por favor, ingresa tu dirección de entrega antes de pedir.");
-                document.getElementById('direccion-cliente').focus();
-                return;
-            }
+      <div class="prod-card" data-cat="sopes" onclick="agregar('gorditas6','Gorditas x 6',50,'🥞')">
+        <div class="prod-emoji">🥞</div>
+        <div class="prod-nombre">Gorditas x 6</div>
+        <div class="prod-desc">Gorditas infladas. Lisas o con chicharrón prensado.</div>
+        <div class="prod-precio">$50 <span>/ 6 pzas</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            let total = 0;
-            let mensaje = "👋 Hola! Quiero hacer un pedido a domicilio:\n\n";
+      <div class="prod-card" data-cat="extra" onclick="agregar('masa1','Masa Preparada 1 kg',22,'⚪')">
+        <div class="prod-emoji">⚪</div>
+        <div class="prod-nombre">Masa Fresca 1 kg</div>
+        <div class="prod-desc">Para hacer tus propias tortillas en casa. Lista para prensa.</div>
+        <div class="prod-precio">$22 <span>/ kg</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            productos.forEach(prod => {
-                if (carrito[prod.id] > 0) {
-                    let subtotal = carrito[prod.id] * prod.precio;
-                    mensaje += `▪ ${carrito[prod.id]}x ${prod.nombre} ($${subtotal.toFixed(2)})\n`;
-                    total += subtotal;
-                }
-            });
+      <div class="prod-card" data-cat="extra" onclick="agregar('charola','Charola 5 kg + Envío',165,'📦')">
+        <div class="prod-emoji">📦</div>
+        <div class="prod-nombre">Charola 5 kg</div>
+        <div class="prod-desc">Pedido de mayoreo. Ideal para restaurantes y eventos.</div>
+        <div class="prod-precio">$165 <span>/ charola</span></div>
+        <button class="btn-add">+ Agregar</button>
+      </div>
 
-            mensaje += `\n*TOTAL DEL PEDIDO: $${total.toFixed(2)}*\n\n`;
-            mensaje += `📍 *Dirección de entrega:* \n${direccionInput}`;
+    </div>
 
-            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-        }
+    <div class="card">
+      <div class="card-title">🌽 Preferencia de Tortilla</div>
+      <div class="tipo-grid" id="tipoGrid">
+        <div class="tipo-card active" onclick="selTipo(this)">
+          <div class="tipo-icon">🫓</div>
+          <div class="tipo-nombre">Recién hecha</div>
+          <div class="tipo-desc">Caliente del comal, blandita</div>
+        </div>
+        <div class="tipo-card" onclick="selTipo(this)">
+          <div class="tipo-icon">🌡️</div>
+          <div class="tipo-nombre">Templada</div>
+          <div class="tipo-desc">Medio fría, fácil de manejar</div>
+        </div>
+        <div class="tipo-card" onclick="selTipo(this)">
+          <div class="tipo-icon">❄️</div>
+          <div class="tipo-nombre">Fría para congelar</div>
+          <div class="tipo-desc">Extrafina, congela mejor</div>
+        </div>
+        <div class="tipo-card" onclick="selTipo(this)">
+          <div class="tipo-icon">🫓</div>
+          <div class="tipo-nombre">Gruesa / Especial</div>
+          <div class="tipo-desc">Para molcajetes o quesadillas</div>
+        </div>
+      </div>
+    </div>
 
-        renderProductos();
-    </script>
+    <div class="card">
+      <div class="card-title">📋 Datos de Entrega</div>
+      <div class="form-row">
+        <div><label>Nombre *</label><input id="fNom" type="text" placeholder="Ej: Carmen Ortiz"></div>
+        <div><label>Teléfono *</label><input id="fTel" type="tel" placeholder="442-XXX-XXXX"></div>
+      </div>
+      <div class="form-row full">
+        <div><label>Dirección completa *</label><input id="fDir" type="text" placeholder="Calle, número, colonia, Querétaro"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Colonia</label><input id="fCol" type="text" placeholder="Ej: El Campanario"></div>
+        <div><label>Código postal</label><input id="fCP" type="text" placeholder="760XX"></div>
+      </div>
+      <div class="form-row full">
+        <div><label>Notas / Referencias</label><textarea id="fNot" placeholder="Casa de color amarillo, portón negro, etc."></textarea></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🕐 Horario de Entrega</div>
+      <div class="hor-grid" id="horGrid">
+        <button class="hor-btn" onclick="selHor(this)">7:00 – 9:00</button>
+        <button class="hor-btn" onclick="selHor(this)">9:00 – 11:00</button>
+        <button class="hor-btn" onclick="selHor(this)">11:00 – 13:00</button>
+        <button class="hor-btn" onclick="selHor(this)">13:00 – 15:00</button>
+        <button class="hor-btn" onclick="selHor(this)">15:00 – 17:00</button>
+        <button class="hor-btn" onclick="selHor(this)">Recoger en tienda</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💳 Pago y Facturación</div>
+      <div class="form-row">
+        <div>
+          <label>Forma de pago</label>
+          <select id="fPago">
+            <option value="">Seleccionar...</option>
+            <option value="efectivo">Efectivo al repartidor</option>
+            <option value="transferencia">Transferencia / SPEI</option>
+            <option value="qr">Pago QR (CoDi)</option>
+            <option value="tarjeta">Tarjeta en tienda</option>
+          </select>
+        </div>
+        <div>
+          <label>¿Necesitas factura?</label>
+          <select id="fFac">
+            <option value="no">No gracias</option>
+            <option value="si">Sí, necesito factura</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="mapa-wrap">
+      <div class="mapa-header">
+        <div class="sec-title" style="margin:0;">Encuéntranos</div>
+        <div class="sec-sub" style="margin-top:4px;margin-bottom:0;">Ven a la tortillería o recibe en la puerta de tu casa</div>
+      </div>
+      <iframe class="mapa-frame"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60366.77905929!2d-100.4218!3d20.5888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d35b8d46f12dc9%3A0xd0f6c5afa7afb4f9!2sQuer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1699000000001!5m2!1ses!2smx"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="suc-grid">
+        <div class="suc-item">
+          <span class="suc-ico">📍</span>
+          <div>
+            <div class="suc-lbl">Dirección</div>
+            <div class="suc-val">Av. Constituyentes 780, Col. Alamitos, Querétaro, Qro.</div>
+          </div>
+        </div>
+        <div class="suc-item">
+          <span class="suc-ico">🕐</span>
+          <div>
+            <div class="suc-lbl">Horario</div>
+            <div class="suc-val">Lun–Sáb 6:00–18:00<br>Dom 7:00–13:00</div>
+          </div>
+        </div>
+        <div class="suc-item">
+          <span class="suc-ico">📞</span>
+          <div>
+            <div class="suc-lbl">Teléfono</div>
+            <div class="suc-val">442 215 3380<br>442 215 3381</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar" id="sidebarRef">
+
+    <div class="card" id="carritoCard">
+      <div class="card-title">🛒 Tu Pedido</div>
+      <div id="carritoBody">
+        <div class="vacio">
+          <div class="ico">🫓</div>
+          <p>Aún no hay nada.<br>¡Agrega tortillas!</p>
+        </div>
+      </div>
+      <div id="totDiv" style="display:none;">
+        <div class="total-row"><span>Subtotal</span><span id="tSub">$0</span></div>
+        <div class="total-row"><span>Envío</span><span style="color:var(--verde);font-weight:700;">Gratis</span></div>
+        <div class="total-row grand"><span>Total</span><span id="tTotal">$0</span></div>
+        <button class="btn-pedir" onclick="confirmar()">Confirmar Pedido 🛵</button>
+        <button class="btn-wa-inline" onclick="abrirWA()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir por WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--maiz-pale);border-color:rgba(217,119,6,0.3);">
+      <div style="text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">🌽</div>
+        <div style="font-weight:800;font-size:14px;color:var(--maiz-deep);margin-bottom:6px;">Tradición familiar desde 2000</div>
+        <div style="font-size:12px;color:var(--text-mid);line-height:1.65;font-weight:600;">Masa hecha a diario con maíz criollo nixtamalizado. Sin conservadores. Si no te gusta, te devolvemos tu dinero.</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--verde-lite);border-color:rgba(21,128,61,0.2);">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:24px;">🛵</span>
+        <div>
+          <div style="font-weight:800;font-size:14px;color:var(--verde);margin-bottom:4px;">Envío gratis en Querétaro</div>
+          <div style="font-size:12px;color:#166534;font-weight:600;line-height:1.55;">En pedidos mayores a $100. Entrega en 1 hora en zonas cercanas. Zona norte hasta las 4 pm.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<button class="wa-float" onclick="abrirWA()">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</button>
+<div class="wa-tip">¡Chateanos ahora! 💬</div>
+
+<div class="notif" id="notif"></div>
+
+<div class="modal-bg" id="modBg">
+  <div class="modal">
+    <div class="modal-ico">🎉</div>
+    <h2>¡Pedido Listo!</h2>
+    <p>Recibimos tu pedido. Nuestro repartidor saldrá pronto. Tu folio es:</p>
+    <div class="folio" id="folioTxt">MLD-0000</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px;">Te avisamos por WhatsApp cuando tu pedido esté en camino. 🛵</p>
+    <button class="btn-modal" onclick="cerrarModal()">¡Gracias! 🌽</button>
+  </div>
+</div>
+
+<script>
+  let carrito = {};
+  let horario = '';
+  let tipoTort = 'Recién hecha';
+  const WA = '524421234567';
+
+  function agregar(id, nombre, precio, ico) {
+    if (carrito[id]) carrito[id].qty++;
+    else carrito[id] = { nombre, precio, ico, qty: 1 };
+    renderCarrito();
+    notif(`${ico} ${nombre} agregado`);
+  }
+
+  function cambiarQty(id, d) {
+    if (!carrito[id]) return;
+    carrito[id].qty += d;
+    if (carrito[id].qty <= 0) delete carrito[id];
+    renderCarrito();
+  }
+
+  function renderCarrito() {
+    const body = document.getElementById('carritoBody');
+    const tot  = document.getElementById('totDiv');
+    const badge = document.getElementById('badgeN');
+    const keys = Object.keys(carrito);
+
+    badge.textContent = keys.reduce((s,k) => s + carrito[k].qty, 0);
+
+    if (!keys.length) {
+      body.innerHTML = '<div class="vacio"><div class="ico">🫓</div><p>Aún no hay nada.<br>¡Agrega tortillas!</p></div>';
+      tot.style.display = 'none';
+      return;
+    }
+
+    let html = '', sub = 0;
+    keys.forEach(id => {
+      const it = carrito[id];
+      sub += it.precio * it.qty;
+      html += `<div class="ci">
+        <div class="ci-left">
+          <span class="ci-ico">${it.ico}</span>
+          <div>
+            <div class="ci-name">${it.nombre}</div>
+            <div class="ci-sub">$${it.precio} c/u · $${it.precio * it.qty}</div>
+          </div>
+        </div>
+        <div class="ci-qty">
+          <button class="q-btn" onclick="cambiarQty('${id}',-1)">−</button>
+          <span class="q-num">${it.qty}</span>
+          <button class="q-btn" onclick="cambiarQty('${id}',1)">+</button>
+        </div>
+      </div>`;
+    });
+
+    body.innerHTML = html;
+    tot.style.display = 'block';
+    document.getElementById('tSub').textContent = `$${sub}`;
+    document.getElementById('tTotal').textContent = `$${sub}`;
+  }
+
+  function selHor(btn) {
+    document.querySelectorAll('.hor-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    horario = btn.textContent;
+  }
+
+  function selTipo(card) {
+    document.querySelectorAll('.tipo-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    tipoTort = card.querySelector('.tipo-nombre').textContent;
+  }
+
+  function filtrarCat(btn, cat) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.prod-card').forEach(c => {
+      c.style.display = (cat === 'todos' || c.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  function scrollCarrito() {
+    document.getElementById('sidebarRef').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function notif(msg) {
+    const n = document.getElementById('notif');
+    n.textContent = '✓ ' + msg;
+    n.classList.add('show');
+    clearTimeout(n._t);
+    n._t = setTimeout(() => n.classList.remove('show'), 2500);
+  }
+
+  function confirmar() {
+    const nom = document.getElementById('fNom').value.trim();
+    const tel = document.getElementById('fTel').value.trim();
+    const dir = document.getElementById('fDir').value.trim();
+    const pago = document.getElementById('fPago').value;
+    if (!nom || !tel || !dir) { notif('⚠️ Completa nombre, teléfono y dirección'); return; }
+    if (!pago) { notif('⚠️ Selecciona forma de pago'); return; }
+    if (!Object.keys(carrito).length) { notif('⚠️ Agrega al menos un producto'); return; }
+    const folio = 'MLD-' + Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('folioTxt').textContent = folio;
+    document.getElementById('modBg').classList.add('show');
+  }
+
+  function cerrarModal() {
+    document.getElementById('modBg').classList.remove('show');
+    carrito = {};
+    renderCarrito();
+    ['fNom','fTel','fDir','fCol','fCP','fNot'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fPago').value = '';
+  }
+
+  function abrirWA() {
+    const nom  = document.getElementById('fNom').value.trim() || 'Cliente';
+    const dir  = document.getElementById('fDir').value.trim() || 'Sin especificar';
+    const hor  = horario || 'Flexible';
+    const pago = document.getElementById('fPago').value || 'Por definir';
+    const not  = document.getElementById('fNot').value.trim();
+
+    let lista = '';
+    Object.values(carrito).forEach(i => {
+      lista += `• ${i.ico} ${i.nombre} × ${i.qty} = $${i.precio * i.qty}\n`;
+    });
+    if (!lista) lista = '(Sin productos seleccionados aún)\n';
+
+    const total = Object.keys(carrito).reduce((s,k) => s + carrito[k].precio * carrito[k].qty, 0);
+
+    const msg =
+      `*🫓 Pedido — La Milpa Dorada*\n\n`
+      + `👤 *Nombre:* ${nom}\n`
+      + `📍 *Dirección:* ${dir}\n`
+      + `🕐 *Horario:* ${hor}\n`
+      + `🌽 *Tipo tortilla:* ${tipoTort}\n`
+      + `💳 *Pago:* ${pago}\n\n`
+      + `*Productos:*\n${lista}\n`
+      + `💰 *Total: $${total}*`
+      + (not ? `\n\n📝 *Notas:* ${not}` : '');
+
+    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+</script>
+
 </body>
 </html>
